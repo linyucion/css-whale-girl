@@ -2,7 +2,9 @@ import os
 import numpy as np, math
 from PIL import Image
 
-SRC = r"C:\Users\linyu\Desktop\Linyucion\dsh\.ref-whale\tight.png"
+# 参考图路径。默认读当前目录的 input.png，可用环境变量 SRC 覆盖：
+#   SRC=参考图.png python src/quant.py
+SRC = os.environ.get("SRC", "input.png")
 im = Image.open(SRC).convert("RGBA")
 W, H = im.size
 print("src", W, H)
