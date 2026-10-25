@@ -10,7 +10,7 @@ from skimage import measure
 
 # 数据目录：脚本同级目录。可用环境变量 CWG_DATA 覆盖。
 BASE = pathlib.Path(os.environ.get("CWG_DATA", pathlib.Path(__file__).resolve().parent.parent / "data"))
-OUT  = BASE / ".ref-whale"
+OUT  = BASE
 REF  = os.environ.get("REF", str(OUT / "ai-ref-1k.png"))
 
 K       = int(os.environ.get("K", 40))
