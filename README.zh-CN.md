@@ -4,6 +4,8 @@
 
 **用 7,348 个 `clip-path` 多边形画一张插画。零图片、零 SVG、零 Canvas、零 JavaScript。**
 
+<img src="docs/preview.png" alt="鲸鱼娘，7348 个 clip-path 多边形" width="360">
+
 ```
 文件大小        4.04 MB
 绘图节点        7,348 个 <b>
@@ -102,7 +104,7 @@ python measure/remeasure_mae.py --ref 参考图.png
 
 ## 参考图从哪来
 
-管线需要一张参考图才能跑。它不在本仓库里（体积 + 授权），但来源是清楚的：
+管线需要一张参考图才能跑。**仓库里带了一份：[`docs/reference.png`](docs/reference.png)**，来源如下：
 
 | 步骤 | 内容 |
 |---|---|
@@ -134,7 +136,7 @@ docs/
 
 - **代码**（`src/`、`measure/`）：[MIT](LICENSE)
 - **插画成品**（`art/`）：[CC BY-NC-SA 4.0](LICENSE-ART)
-- **输入参考图不包含在本仓库内**
+- **参考图**（`docs/reference.png`）随仓库提供，仅供对照
 
 角色「鲸鱼娘」是**社区共同创作的二创形象**，不是 DeepSeek 官方角色：
 

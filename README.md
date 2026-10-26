@@ -4,6 +4,8 @@
 
 **An illustration drawn with 7,348 `clip-path` polygons. Zero images, zero SVG, zero Canvas, zero JavaScript.**
 
+<img src="docs/preview.png" alt="Whale Girl, drawn with 7,348 clip-path polygons" width="360">
+
 [Live](https://whale.chu-2.moe) · [Build log (14,000 characters, Chinese)](https://chronicle.linyucion.com/works/001-css-whale-girl/making-of/) · [Why](https://chronicle.linyucion.com/works/001-css-whale-girl/)
 
 ```
@@ -76,6 +78,9 @@ Parameters and **why they were chosen** are in
 # Generation: Python 3.10+, needs numpy / scipy / scikit-learn / scikit-image / Pillow
 pip install -r requirements.txt
 
+# NOTE: the reference image ships as docs/reference.png. Copy it to
+# whatever path you pass in, or point --ref at it directly.
+
 # 1. quantize + trace contours
 python src/trace.py reference.png
 
@@ -124,8 +129,8 @@ Full post-mortem in [`docs/failures.md`](docs/failures.md).
 
 ## Where the reference image comes from
 
-The pipeline needs a reference image to run. It is not in this repo (size +
-licensing), but its provenance is documented:
+The pipeline needs a reference image to run. **A copy ships at
+[`docs/reference.png`](docs/reference.png)**; its provenance:
 
 | Step | What |
 |---|---|
@@ -158,7 +163,7 @@ docs/
 
 - **Code** (`src/`, `measure/`): [MIT](LICENSE)
 - **Artwork** (`art/`): [CC BY-NC-SA 4.0](LICENSE-ART)
-- **The reference image is not included**
+- **The reference image** (`docs/reference.png`) ships for reference only
 
 The character "Whale Girl" is a **community-created derivative**, not an
 official DeepSeek character:
