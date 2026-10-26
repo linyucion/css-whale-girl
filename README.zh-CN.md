@@ -141,6 +141,70 @@ python measure/remeasure_mae.py --ref docs/reference.png --art art/css-whale-gir
 
 ---
 
+---
+
+## 在别的电脑上跑
+
+**只需要 Python 3.10+ 和 git。** 不需要 Node、不需要 Chrome、不需要编译工具。
+其余都是 `pip install`。
+
+```bash
+git clone https://github.com/linyucion/css-whale-girl.git
+cd css-whale-girl
+
+# 虚拟环境可选，但建议
+python -m venv .venv
+.venv/Scripts/activate          # Windows
+# source .venv/bin/activate     # macOS / Linux
+
+pip install -r requirements.txt
+
+python run.py
+```
+
+应该看到：
+
+```text
+[1/3 描轮廓+描边] inkfix.py …  102s  json 1670055 bytes
+[2/3 残差层]      residual.py …  12s  DONE rings=2149 ...
+[3/3 生成]        build_site.py … 0s  1.86 MB
+
+✅ 完成，总耗时 102s
+```
+
+然后打开 `art/css-whale-girl.html` —— 双击就行，不用起服务。
+
+**总下载约 6 MB，总耗时约 2 分钟。**
+
+### 各平台
+
+| | |
+|---|---|
+| **Windows** | 直接能跑。设环境变量用 `$env:K="72"` |
+| **macOS / Linux** | 直接能跑。设环境变量用 `export K=72` |
+| **Python** | 在 3.12 上测过；依赖要求 3.10+ |
+
+代码里**没有任何硬编码的绝对路径** —— 每个脚本都用 `__file__` 推自己的
+数据目录，`run.py` 往下传绝对路径。
+
+### 量误差（可选）
+
+这一步需要 **Chrome 或 Chromium**，因为它要把页面渲染出来逐像素比。
+没有就跳过 —— `run.py` 不需要它。
+
+```bash
+python measure/remeasure_mae.py --ref docs/reference.png
+```
+
+**默认不设通过/失败门槛。** 文章里出现过 9.69，但重写测量脚本之后
+复现不出来 —— 同一份产物现在测出来是别的数。与其给一个和别人测出来
+不一样的数，这个仓库**不宣称任何目标 MAE**。想要 CI 卡门槛就自己传
+`--max-mae`。
+
+见 [docs/failures.md](docs/failures.md) 第九节。
+
+---
+
 ## 目录
 
 ```

@@ -158,6 +158,71 @@ trace a blob. Let the AI recover the structure first, then trace.
 
 ---
 
+---
+
+## Quick start on a fresh machine
+
+**Requirements: Python 3.10+ and git. Nothing else.** No Node, no Chrome,
+no build tools. Everything else is `pip install`.
+
+```bash
+git clone https://github.com/linyucion/css-whale-girl.git
+cd css-whale-girl
+
+# A venv is optional but recommended
+python -m venv .venv
+.venv/Scripts/activate          # Windows
+# source .venv/bin/activate     # macOS / Linux
+
+pip install -r requirements.txt
+
+python run.py
+```
+
+You should see:
+
+```text
+[1/3 描轮廓+描边] inkfix.py …  102s  json 1670055 bytes
+[2/3 残差层]      residual.py …  12s  DONE rings=2149 ...
+[3/3 生成]        build_site.py … 0s  1.86 MB
+
+✅ 完成，总耗时 102s
+```
+
+Then open `art/css-whale-girl.html` — double-click it, no server needed.
+
+**Total download about 6 MB. Total runtime about 2 minutes.**
+
+### Platform notes
+
+| | |
+|---|---|
+| **Windows** | Works as-is. Set env vars like `$env:K="72"` |
+| **macOS / Linux** | Works as-is. Set env vars like `export K=72` |
+| **Python** | Tested on 3.12; the dependencies need 3.10+ |
+
+No hard-coded absolute paths anywhere — every script resolves its data
+directory from `__file__`, and `run.py` passes absolute paths down.
+
+### Measuring the error (optional)
+
+This step needs **Chrome or Chromium**, because it renders the page and
+compares pixels. Skip it if you do not have one — `run.py` does not need it.
+
+```bash
+python measure/remeasure_mae.py --ref docs/reference.png
+```
+
+**There is no default pass/fail threshold.** The article mentioned 9.69, but
+after rewriting the measurement script I could not reproduce it — the same
+artifact measures differently now. Rather than ship a number that disagrees
+with other people's measurements, this repo states no target MAE at all.
+Pass `--max-mae` yourself if you want CI to gate on it.
+
+See [docs/failures.md](docs/failures.md) section 9.
+
+---
+
 ## Layout
 
 ```
