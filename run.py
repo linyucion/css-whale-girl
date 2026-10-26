@@ -82,7 +82,8 @@ def main() -> int:
                     help="输出 HTML 路径")
     ap.add_argument("--workdir", default=str(ROOT / "data"),
                     help="中间文件目录（默认 data/，被 .gitignore 忽略）")
-    ap.add_argument("--k", type=int, default=40, help="K-means 色数（默认 40）")
+    ap.add_argument("--k", type=int, default=None,
+                    help="K-means 色数（默认读环境变量 K，否则 40）")
     ap.add_argument("--skip-ink", action="store_true",
                     help="不做描边层（快约 60 秒，但边缘会糊）")
     ap.add_argument("--skip-residual", action="store_true",
@@ -107,7 +108,9 @@ def main() -> int:
     print(f"  中间文件 {wd}")
     print()
 
-    env = {**os.environ, "CWG_DATA": str(wd), "REF": str(ref), "K": str(args.k)}
+    env = {**os.environ, "CWG_DATA": str(wd), "REF": str(ref)}
+    if args.k is not None:
+        env["K"] = str(args.k)
     t_all = time.time()
 
     # ── ① 描轮廓（二选一）──────────────────────────────
