@@ -16,7 +16,10 @@ from skimage import measure
 
 # 数据目录：脚本同级目录。可用环境变量 CWG_DATA 覆盖。
 BASE = pathlib.Path(os.environ.get("CWG_DATA", pathlib.Path(__file__).resolve().parent.parent / "data"))
-REF  = BASE / "ai-ref-1k.png"
+# 参考图：优先读 REF 环境变量（trace.py 就是这么做的），
+# 否则用随仓库附带的 docs/reference.png。
+REF  = pathlib.Path(os.environ.get("REF", pathlib.Path(__file__).resolve()
+                                          .parent.parent / "docs" / "reference.png"))
 
 K       = int(os.environ.get("K", 64))
 SIGMA   = float(os.environ.get("SIGMA", 1.8))

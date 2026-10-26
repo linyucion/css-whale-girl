@@ -75,29 +75,42 @@ Parameters and **why they were chosen** are in
 ## Usage
 
 ```bash
-# Generation: Python 3.10+, needs numpy / scipy / scikit-learn / scikit-image / Pillow
+# Python 3.10+. numpy / scipy / scikit-learn / scikit-image / Pillow
 pip install -r requirements.txt
 
-# NOTE: the reference image ships as docs/reference.png. Copy it to
-# whatever path you pass in, or point --ref at it directly.
-
-# 1. quantize + trace contours
-python src/trace.py reference.png
-
-# 2. (optional) stroke layer
-python src/inkfix.py
-
-# 3. (optional) residual compensation
-python src/residual.py
-
-# 4. build the HTML
-python src/build_site.py data/layers_res3.json art/output.html
-
-# 5. verify the error (this step matters — see below)
-python measure/remeasure_mae.py --ref reference.png
+# One command, from the repo root:
+python run.py
 ```
 
-The data directory defaults to `data/` in the repo; override with `CWG_DATA`.
+That writes `art/css-whale-girl.html` — **about 2 minutes**, no external
+assets, opens by double-click.
+
+```bash
+python run.py --skip-ink          # no stroke layer, ~100s
+python run.py --skip-residual     # no residual pass, faster but loses detail
+python run.py --out /tmp/x.html   # write elsewhere
+python run.py --ref my.png        # use your own reference image
+```
+
+`run.py` sets up the whole chain (`src/inkfix.py` → `src/residual.py` →
+`src/build_site.py`) with the environment variables those scripts expect.
+Intermediate files go to `data/` (gitignored).
+
+### What the defaults produce
+
+The default parameters give a **lighter** render than the artwork in `art/`:
+around 2,200 polygons instead of 7,348. It is recognisably the same
+illustration, just coarser.
+
+The published 7,348-polygon version came from tuned parameters and more
+residual rounds. It is committed as `art/css-whale-girl.html`; `run.py` is
+there so you can see the pipeline work end to end, not to reproduce that
+exact file byte for byte.
+
+```bash
+# Measure the error of whatever you produced
+python measure/remeasure_mae.py --ref docs/reference.png --art art/css-whale-girl.html
+```
 
 **Viewing needs nothing at all** — the generated HTML opens by double-click.
 

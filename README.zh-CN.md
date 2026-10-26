@@ -68,14 +68,37 @@ HTML —— 打开就长成那张画，没有任何外部依赖。
 ```bash
 pip install -r requirements.txt
 
-python src/trace.py 参考图.png       # 量化 + 描轮廓
-python src/inkfix.py                 # （可选）描边层
-python src/residual.py               # （可选）残差补偿
-python src/build_site.py data/layers_res3.json art/output.html
-python measure/remeasure_mae.py --ref 参考图.png
+# 在仓库根目录，一条命令：
+python run.py
 ```
 
-数据目录默认 `data/`，可用环境变量 `CWG_DATA` 覆盖。
+产物写到 `art/css-whale-girl.html` —— **约 2 分钟**，没有外部依赖，双击就能开。
+
+```bash
+python run.py --skip-ink          # 不做描边层，约 100 秒
+python run.py --skip-residual     # 不做残差补偿，更快但细节会丢
+python run.py --out /tmp/x.html   # 换个输出位置
+python run.py --ref my.png        # 用你自己的参考图
+```
+
+`run.py` 把整条链（`src/inkfix.py` → `src/residual.py` →
+`src/build_site.py`）连同它们需要的环境变量一起包好了。
+中间文件写到 `data/`（已 gitignore）。
+
+### 默认参数产出的是什么
+
+默认参数产出的是**轻量版**：约 2,200 个多边形，不是 `art/` 里那份 7,348 个的。
+认得出是同一张画，但更粗。
+
+发布的 7,348 版是用调过的参数、更多轮残差跑出来的，已经作为
+`art/css-whale-girl.html` 提交在仓库里。`run.py` 的作用是让你
+**看到管线端到端能跑通**，不是逐字节复现那个文件。
+
+```bash
+# 量一下你产出的误差
+python measure/remeasure_mae.py --ref docs/reference.png --art art/css-whale-girl.html
+```
+
 **查看阶段什么都不需要** —— 生成的 HTML 双击就能开。
 
 ---

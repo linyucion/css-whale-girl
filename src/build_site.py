@@ -8,7 +8,7 @@
     手机 / 平板 / 16:9 / 戴鱼屏 都不裁切。
   · 百分比串比 px 串更短，文件更小。
 """
-import json, sys, pathlib, random
+import json, os, sys, pathlib, random
 
 # 数据目录：脚本同级目录。可用环境变量 CWG_DATA 覆盖。
 BASE = pathlib.Path(os.environ.get("CWG_DATA", pathlib.Path(__file__).resolve().parent.parent / "data"))
